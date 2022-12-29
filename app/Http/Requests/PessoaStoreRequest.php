@@ -24,7 +24,12 @@ class PessoaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => 'required|string|max:50',
+            'sobrenome' => 'required|string|max:50',
+            'celular' => 'required|string|size:11',
+            'logradouro' => 'required|string|max:100',
+            'cep' => 'required|string|size:8',
+            'cpf' => 'required|string|max:11|unique:pessoas,cpf'
         ];
     }
 }

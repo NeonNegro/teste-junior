@@ -32,7 +32,7 @@ class PessoaService implements PessoaServiceInterface
      */
     public function all(): ?Collection
     {
-        // TODO: Implement all() method.
+        return null;
     }
 
     /**
@@ -40,7 +40,6 @@ class PessoaService implements PessoaServiceInterface
      */
     public function create(array $data): ?Model
     {
-        $var = 10 / 0;
         return $this->pessoaRepo->create($data);
     }
 
@@ -49,7 +48,7 @@ class PessoaService implements PessoaServiceInterface
      */
     public function delete(int $id): ?bool
     {
-        // TODO: Implement delete() method.
+        return null;
     }
 
     /**
@@ -57,6 +56,25 @@ class PessoaService implements PessoaServiceInterface
      */
     public function update(array $data, int $id): ?Model
     {
-        // TODO: Implement update() method.
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function consultCEP($cep) : string
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://viacep.com.br/ws/'.$cep.'/json/',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'GET'
+        ]);
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return $response;
     }
 }

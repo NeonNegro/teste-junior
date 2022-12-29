@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PessoaStoreRequest;
 use App\Http\Requests\PessoaUpdateRequest;
-use App\Services\PessoaServiceInterface;
+use App\Services\PessoaService;
+//use App\Services\PessoaServiceInterface;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PessoaController extends Controller
 {
     /**
-     * @var PessoaServiceInterface
+     * @var PessoaService
      */
     private $pessoaService;
 
-    public function __construct(PessoaServiceInterface $pessoaService)
+    public function __construct(PessoaService $pessoaService)
     {
         $this->pessoaService = $pessoaService;
     }
@@ -37,6 +38,7 @@ class PessoaController extends Controller
      */
     public function store(PessoaStoreRequest $request)
     {
+        //return $request;
         $pessoa = $this->pessoaService->create($request->all());
         if ($pessoa) {
             return response()->json($pessoa, Response::HTTP_OK);
@@ -51,6 +53,7 @@ class PessoaController extends Controller
     public function show($id)
     {
         $pessoa = $this->pessoaService->find($id);
+
         if ($pessoa) {
             return response()->json($pessoa, Response::HTTP_OK);
         }
@@ -61,12 +64,13 @@ class PessoaController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PessoaUpdateRequest $request, $id)
+    public function update($cep)
     {
-        //
+        $teste = $this->pessoaService->consultCEP($cep);
+        
+        return response()->json($teste, Response::HTTP_OK);
     }
 
     /**
